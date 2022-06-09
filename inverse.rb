@@ -21,9 +21,13 @@ class MetasploitModule < Msf::Encoder
   end
 
   #
-  # Simply return the eversed buf.
+  # Simply return the inverted buf. Funnily Microsoft Defender does nor recognize the encoded payload
   #
   def encode_block(state, buf)
-    return biuf.reverse()
+    encoded =''    
+    buf.unpack('C*').each do |ch|
+      encoded << (255-ch).chr
+    end   
+    return encoded
   end
 end
