@@ -21,9 +21,15 @@ class MetasploitModule < Msf::Encoder
   end
 
   #
-  # Simply return the reversed buf.
+  # Simply return the inverted and reversed buf.
   #
   def encode_block(state, buf)
-    buf.reverse()
+    encoded =''    
+    
+    buf = buf.reverse()
+    buf.unpack('C*').each do |ch|
+      encoded << (255-ch).chr
+    end   
+    return encoded
   end
 end
